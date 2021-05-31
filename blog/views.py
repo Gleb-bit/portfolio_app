@@ -1,32 +1,49 @@
 from django.shortcuts import render
+from django.views import generic
 
 from blog.forms import CommentForm
 from blog.models import Post, Comment
 
 
-def blog_index(request):
-    posts = Post.objects.all().order_by('-created_on')
-    context = {
-        "posts": posts,
-    }
-    return render(request, "blog_index.html", context)
+class BlogIndexView(generic.ListView):
+    model = Post
+    context_object_name = 'posts'
+    template_name = 'blog_index.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.order_by('-created_on')
+        return queryset
 
 
-def blog_category(request, category):
-    posts = Post.objects.filter(categories__name__contains=category).order_by('-created_on')
-    context = {
-        "category": category,
-        "posts": posts
-    }
-    return render(request, "blog_category.html", context)
+class BlogCategoryView(generic.View):
+
+    def get(self, request, category):
+        posts = Post.objects.filter(categories__name__contains=category).order_by('-created_on')
+        context = {
+            "category": category,
+            "posts": posts
+        }
+        return render(request, "blog_category.html", context)
 
 
-def blog_detail(request, pk):
-    post = Post.objects.get(pk=pk)
-    comments = Comment.objects.filter(post=post)
+class BlogDetailView(generic.DetailView):
 
-    form = CommentForm()
-    if request.method == 'POST':
+    def get(self, request, *args, **kwargs):
+        pk = kwargs['pk']
+        post = Post.objects.get(pk=pk)
+        comments = Comment.objects.filter(post=post)
+        form = CommentForm()
+        context = {
+            "post": post,
+            'comments': comments,
+            'form': form,
+        }
+        return render(request, "blog_detail.html", context)
+
+    def post(self, request, pk):
+        post = Post.objects.get(pk=pk)
+        comments = Comment.objects.filter(post=post)
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = Comment(
@@ -35,9 +52,5 @@ def blog_detail(request, pk):
                 post=post
             )
             comment.save()
-    context = {
-        "post": post,
-        'comments': comments,
-        'form': form,
-    }
-    return render(request, "blog_detail.html", context)
+        context = {'post': post, 'comments': comments, 'form': form}
+        return render(request, "blog_detail.html", context)

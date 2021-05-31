@@ -1,19 +1,17 @@
-from django.shortcuts import render
+from django.views import generic
+from projects.models import Project
+from django.views import generic
 
 from projects.models import Project
 
 
-def project_index(request):
-    projects = Project.objects.all()
-    context = {
-        'projects': projects
-    }
-    return render(request, 'project_index.html', context)
+class ListProjectView(generic.ListView):
+    model = Project
+    context_object_name = 'projects'
+    template_name = 'project_index.html'
 
 
-def project_detail(request, pk):
-    project = Project.objects.get(pk=pk)
-    context = {
-        'project': project
-    }
-    return render(request, 'project_detail.html', context)
+class DetailProjectView(generic.DetailView):
+    model = Project
+    context_object_name = 'project'
+    template_name = 'project_detail.html'
