@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_content %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Logout</title>
+    </head>
+    <body>
+    <h2>Logout</h2>
+    Вы успешно вышли из учетной записи<br><br><br><br><br>
+    <a href="{% url 'main' %}">Главная</a>
+    </body>
+    </html>
+{% endblock %}
