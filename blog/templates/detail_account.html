@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block page_content %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Detail account</title>
+    </head>
+    <body>
+    <h2 class="m-3">Hello, {{ profile_list.name }}. You can see information about you here.</h2>
+    <ul>
+        <li>Your name: {{ profile_list.name }}</li>
+        <li>Your surname: {{ profile_list.surname }}</li>
+        {% if request.user.profile.about_me %}
+            <li>You wrote about yourself: {{ profile_list.about_me }}</li>
+        {% else %}
+            <li>You have not written detail information about yourself yet.</li>
+        {% endif %}
+        {% if request.user.profile.avatar %}
+            <li>Your avatar:<br>
+                <img src="{{ MEDIA_URL }}{{ profile_list.avatar.url }}" alt="{{ profile_list.avatar.url }}"
+                     class="img-thumbnail m-3" width="20%" height="20%"></li>
+        {% else %}
+            <li>You have not chosen avatar yet.</li>
+        {% endif %}
+    </ul>
+    <form action="{{ request.user.profile.pk }}/edit" method="get">
+        <button class="btn btn-primary" type="submit" data-toggle="collapse" data-target="#collapseExample"
+                aria-expanded="false" aria-controls="collapseExample">Edit account
+        </button>
+    </form>
+    </body>
+    </html>
+{% endblock %}

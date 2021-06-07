@@ -22,6 +22,9 @@ class Post(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     categories = models.ManyToManyField('Category', related_name='posts')
+    user = models.ForeignKey('Profile', verbose_name='User',
+                             on_delete=models.CASCADE,
+                             related_name='profile')
 
     def __str__(self):
         return self.title

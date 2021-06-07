@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
+from blog.models import Profile
+
 
 class TestUser(TestCase):
     @classmethod
@@ -16,6 +18,13 @@ class TestUser(TestCase):
             'password1': 'dhf913r7nfydsf389r29',
             'password2': 'dhf913r7nfydsf389r29'
         }
+        user = User.objects.create_user(**self.credentials)
+        self.profile_data = {
+            'user': user,
+            'name': 'Johnny',
+            'surname': 'Depp',
+        }
+        Profile.objects.create(**self.profile_data)
 
     def test_registration(self):
         response = self.client.post('/blog/user/register/', self.register_data, follow=True)
@@ -23,7 +32,6 @@ class TestUser(TestCase):
         self.assertTemplateUsed(response, 'blog_index.html')
 
     def test_login(self):
-        User.objects.create_user(**self.credentials)
-        response = self.client.post('/blog/user/login/', **self.credentials)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'login.html')
+        response = self.client.post('/blog/user/login/', self.credentials, follow=True)
+        self.assertTrue(response.context['user'].is_authenticated)
+        self.assertRedirects(response, '/blog/')

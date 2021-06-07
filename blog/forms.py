@@ -2,7 +2,22 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from blog.models import Profile, Comment
+from blog.models import Profile, Comment, Post, Category
+
+
+class CategoryDocumentForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ('name', )
+
+
+class BlogDocumentForm(forms.ModelForm):
+    title = forms.CharField(max_length=15, required=False)
+    categories = forms.CharField(min_length=3, max_length=100)
+
+    class Meta:
+        model = Post
+        fields = ('title', 'body', 'categories', 'categories')
 
 
 class CommentForm(forms.Form):
@@ -24,6 +39,7 @@ class CommentForm(forms.Form):
     class Meta:
         model = Comment
         exclude = ['created_on', 'post', 'user']
+
 
 class AccountForm(forms.ModelForm):
     name = forms.CharField(help_text=' (Name)')
