@@ -14,12 +14,12 @@
                     </a>&nbsp;
                 {% endfor %}
             </small>
-            <p>{{ post.body | slice:":400" }}...</p>
+            <p>{{ post.body | slice:":40" }}...</p>
         {% endfor %}
         <form action="/blog/create/post" method="get">
             <button class="btn btn-primary" type="submit" data-toggle="collapse" data-target="#collapseExample"
-                aria-expanded="false" aria-controls="collapseExample">Create new post
-        </button>
+                    aria-expanded="false" aria-controls="collapseExample">Create new post
+            </button>
         </form>
     </div>
 {% endblock %}

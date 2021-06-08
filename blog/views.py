@@ -72,6 +72,12 @@ class BlogDetailView(generic.DetailView):
         return author
 
 
+class DeleteComment(generic.DeleteView):
+    model = Comment
+    success_url = '/blog/'
+    template_name = 'delete_comment_confirm.html'
+
+
 class CreatePostView(LoginRequiredMixin, generic.CreateView):
     model = Post
     context_object_name = 'post_list'
@@ -89,6 +95,12 @@ class CreatePostView(LoginRequiredMixin, generic.CreateView):
             instance.categories.set([categories])
             return HttpResponseRedirect('/blog/')
         return render(request, 'create_post.html', context={'form': blog_form})
+
+
+class DeletePost(generic.DeleteView):
+    model = Post
+    success_url = '/blog/'
+    template_name = 'delete_post_confirm.html'
 
 
 class DetailAccountView(generic.DetailView):

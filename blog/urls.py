@@ -7,6 +7,8 @@ urlpatterns = [
     path('<int:pk>/', BlogDetailView.as_view(), name="blog_detail"),
     path('<category>/', BlogCategoryView.as_view(), name="blog_category"),
     path('create/post', CreatePostView.as_view(), name='create_post'),
+    path('delete/comment/<int:pk>/', DeleteComment.as_view(), name='del_comment'),
+    path('delete/post/<int:pk>/', DeletePost.as_view(), name='del_post'),
     path('user/register/', RegisterView.as_view(), name='register'),
     path("oauth/", include('social_django.urls')),
     path('user/login/', OurLoginView.as_view(), name='login'),

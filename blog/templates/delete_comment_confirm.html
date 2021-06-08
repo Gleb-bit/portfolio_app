@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block page_content %}
+    <form method="post">
+        {% csrf_token %}
+        <h2 class="mt-4">Are you sure you want to delete comment, "{{ object }}"?</h2>
+        <button class="btn btn-primary mt-4" type="submit" data-toggle="collapse"
+                data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            Confirm
+        </button>
+    </form>
+{% endblock %}

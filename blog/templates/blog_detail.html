@@ -18,6 +18,15 @@
             {% endfor %}
         </small>
         <p>{{ post.body | linebreaks }}</p>
+        {% if request.user.id == post.user.id %}
+            <form action="/blog/delete/post/{{ post.id }}">
+                <input type="hidden" value="{{ post.id }}" name="id">
+                <button class="btn btn-primary" type="submit" data-toggle="collapse"
+                        data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    Delete post
+                </button>
+            </form>
+        {% endif %}
         <h3>Leave a comment:</h3>
         <form action="/blog/{{ post.pk }}/" method="post">
             {% csrf_token %}
@@ -37,7 +46,7 @@
                 <h6>{{ comment.created_on|date:"d.m.Y H:i:s" }}</h6>
                 {% if comment.user.profile.avatar %}
                     </div>
-                    <img class="col-md-2" src="{{ MEDIA_URL }}{{ request.user.profile.avatar.url }}" alt=""
+                    <img class="col-md-2" src="{{ MEDIA_URL }}{{ comment.user.profile.avatar.url }}" alt=""
                          width="100px" height="100px">&nbsp;&nbsp;
                     <b>{{ comment.author }}</b> wrote:
                     <div class="col-md-8 offset-md-2">
@@ -45,6 +54,15 @@
                     <b>{{ comment.author }}</b> wrote:
                 {% endif %}
                 <p>{{ comment.body }}</p>
+                {% if request.user.id == comment.user.id %}
+                    <form action="/blog/delete/comment/{{ comment.id }}">
+                        <input type="hidden" value="{{ post.id }}" name="id">
+                        <button class="btn btn-primary" type="submit" data-toggle="collapse"
+                                data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            Delete commentary
+                        </button>
+                    </form>
+                {% endif %}
                 <hr>
             {% endfor %}
         {% else %}
