@@ -10,18 +10,21 @@ def user_directory_path(instance, filename):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=20, verbose_name='название')
 
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = 'Категория'
+
 
 class Post(models.Model):
-    title = models.CharField(max_length=255)
-    body = models.TextField()
-    created_on = models.DateTimeField(auto_now_add=True)
-    last_modified = models.DateTimeField(auto_now=True)
-    categories = models.ManyToManyField('Category', related_name='posts')
+    title = models.CharField(max_length=25, verbose_name='название')
+    body = models.TextField(verbose_name='тело')
+    created_on = models.DateTimeField(auto_now_add=True, verbose_name='создан')
+    last_modified = models.DateTimeField(auto_now=True, verbose_name='редактирован')
+    categories = models.ManyToManyField('Category', related_name='posts', blank=True, )
     user = models.ForeignKey('Profile', verbose_name='User',
                              on_delete=models.CASCADE,
                              related_name='profile')
@@ -29,11 +32,14 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name = 'Пост'
+
 
 class Comment(models.Model):
-    author = models.CharField(max_length=60, blank=True)
-    body = models.TextField()
-    created_on = models.DateTimeField(auto_now_add=True)
+    author = models.CharField(max_length=60, blank=True, verbose_name='автор')
+    body = models.TextField(verbose_name='тело')
+    created_on = models.DateTimeField(auto_now_add=True, verbose_name='создан')
     post = models.ForeignKey('Post', on_delete=models.CASCADE)
     user = models.ForeignKey(User, default=None, null=True, verbose_name='Пользователь', on_delete=models.CASCADE,
                              related_name='comments')
@@ -41,13 +47,20 @@ class Comment(models.Model):
     def __str__(self):
         return self.author
 
+    class Meta:
+        verbose_name = 'Комментарий'
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, max_length=25, on_delete=models.CASCADE)
-    name = models.CharField(max_length=25)
-    surname = models.CharField(max_length=25)
-    about_me = models.TextField(blank=True)
+    name = models.CharField(max_length=25, verbose_name='имя')
+    surname = models.CharField(max_length=25, verbose_name='фамилия')
+    about_me = models.TextField(blank=True, verbose_name='обо мне')
     avatar = models.ImageField(upload_to=user_directory_path, blank=True)
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        permissions = (('deleteanotherscomment', "can delete another's comment"),)
+        verbose_name = "Профиль"

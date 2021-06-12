@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 {% block page_content %}
-    <h1>Projects</h1>
+    <h1 class="mt-2">{% trans "Projects" %}</h1>
     <div class="row">
         {% for project in projects %}
             <div class="col-md-4">
@@ -9,10 +10,10 @@
                     <img class="card-img-top" src="{% static project.image %}">
                     <div class="card-body">
                         <h5 class="card-title">{{ project.title }}</h5>
-                        <p class="card-text">{{ project.description }}</p>
+                        <p class="card-text">{{ project.description|truncatechars:250 }}</p>
                         <a href="{% url 'project_detail' project.pk %}"
                            class="btn btn-primary">
-                            Read More
+                            {% trans "Read More" %}
                         </a>
                     </div>
                 </div>

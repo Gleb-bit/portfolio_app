@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block page_content %}
     <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Logout</title>
+        <title>{% trans "Logout" %}</title>
     </head>
     <body>
-    <h2 class="mt-3">Logout</h2>
-    Вы успешно вышли из учетной записи<br><br><br><br><br>
-    <a href="{% url 'main' %}">Главная</a>
+    <h2 class="mt-3">{% trans "Logout" %}</h2>
+    {% trans "You successfully logged out" %}
     </body>
     </html>
 {% endblock %}

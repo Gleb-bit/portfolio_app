@@ -24,6 +24,11 @@ class TestUser(TestCase):
             'name': 'Johnny',
             'surname': 'Depp',
         }
+        self.profile_edit_data = {
+            'name': 'Brad',
+            'surname': 'Pitt',
+            'about_me': 'nothing'
+        }
         Profile.objects.create(**self.profile_data)
 
     def test_registration(self):
@@ -35,3 +40,19 @@ class TestUser(TestCase):
         response = self.client.post('/blog/user/login/', self.credentials, follow=True)
         self.assertTrue(response.context['user'].is_authenticated)
         self.assertRedirects(response, '/blog/')
+
+    def test_logout(self):
+        self.client.login(**self.credentials)
+        response = self.client.post('/blog/user/logout/', follow=True)
+        self.assertFalse(response.context['user'].is_authenticated)
+        self.assertRedirects(response, '/blog/')
+
+    def test_detail_account(self):
+        self.client.login(**self.credentials)
+        response = self.client.get('/blog/user/1')
+        self.assertTemplateUsed(response, 'detail_account.html')
+
+    def test_edit_account(self):
+        self.client.login(**self.credentials)
+        response = self.client.post('/blog/user/1/edit?', self.profile_edit_data)
+        self.assertRedirects(response, '/blog/user/1')

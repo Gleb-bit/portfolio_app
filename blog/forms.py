@@ -8,19 +8,18 @@ from blog.models import Profile, Comment, Post, Category
 class CategoryDocumentForm(forms.ModelForm):
     class Meta:
         model = Category
-        fields = ('name', )
+        fields = ('name',)
 
 
-class BlogDocumentForm(forms.ModelForm):
-    title = forms.CharField(max_length=15, required=False)
-    categories = forms.CharField(min_length=3, max_length=100)
+class PostDocumentForm(forms.ModelForm):
+    categories = forms.CharField(min_length=3, max_length=100, required=False)
 
     class Meta:
         model = Post
-        fields = ('title', 'body', 'categories', 'categories')
+        fields = ('title', 'body', 'categories')
 
 
-class CommentForm(forms.Form):
+class CommentForm(forms.ModelForm):
     author = forms.CharField(
         max_length=60,
         widget=forms.TextInput(attrs={
@@ -53,10 +52,10 @@ class AccountForm(forms.ModelForm):
 
 
 class ExtendedRegisterForm(UserCreationForm):
-    name = forms.CharField()
-    surname = forms.CharField()
-    about_me = forms.CharField(help_text='(Optional)', required=False)
-    avatar = forms.ImageField(help_text='(Optional)', max_length=100, required=False)
+    name = forms.CharField(help_text="Имя")
+    surname = forms.CharField(help_text='Фамилия')
+    about_me = forms.CharField(help_text='Обо мне (Optional)', required=False)
+    avatar = forms.ImageField(help_text='Аватар (Optional)', max_length=100, required=False)
 
     class Meta:
         model = User
