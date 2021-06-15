@@ -2,17 +2,18 @@
 {% load i18n %}
 {% block page_content %}
     <div class="col-md-8 offset-md-2">
-        <h1 class="mt-2">{% trans "Blog Index" %}</h1>
+        <h1 class="mt-2">{% trans "List of posts" %}</h1>
         <hr>
         {% for post in posts %}
-            <h2><a href="{% url 'blog_detail' post.pk %}">{{ post.title }}</a></h2>
+            <h2><a href="{% url 'detail_post' post.pk %}">{{ post.title }}</a></h2>
             <small>
-                {{ post.created_on.date }} {% trans "was written by" %} {% if post.user %} {{ post.user }} {% else %}
+                {{ post.created_on.date }} {% trans "was written by" %} {% if post.profile %}
+                {{ post.profile }} {% else %}
                 {% trans "man, who deleted his account" %} {% endif %}|&nbsp;
                 {% if post.categories.all %}
                     {% trans "Categories" %}:&nbsp;
                     {% for category in post.categories.all %}
-                        <a href="{% url 'blog_category' category.name %}">
+                        <a href="{% url 'list_category' category.name %}">
                             {{ category.name }}
                         </a>&nbsp;
                     {% endfor %}

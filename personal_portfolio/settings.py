@@ -33,6 +33,12 @@ AUTHENTICATION_BACKENDS = [
     'social_core.backends.github.GithubOAuth2',
 ]
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
+    }
+}
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

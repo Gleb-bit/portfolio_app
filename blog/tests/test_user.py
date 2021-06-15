@@ -34,7 +34,7 @@ class TestUser(TestCase):
     def test_registration(self):
         response = self.client.post('/blog/user/register/', self.register_data, follow=True)
         self.assertTrue(response.context['user'].is_authenticated)
-        self.assertTemplateUsed(response, 'blog_index.html')
+        self.assertTemplateUsed(response, 'list_post.html')
 
     def test_login(self):
         response = self.client.post('/blog/user/login/', self.credentials, follow=True)

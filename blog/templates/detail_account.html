@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load cache %}
 {% block page_content %}
     <!DOCTYPE html>
     <html lang="en">
@@ -9,22 +10,24 @@
     </head>
     <body>
     <h2 class="m-3">{% trans "Hello" %}, {{ profile_list.name }}. {% trans "You can see information about you here" %}.</h2>
-    <ul>
-        <li>{% trans "Your name" %}: {{ profile_list.name }}</li>
-        <li>{% trans "Your surname" %}: {{ profile_list.surname }}</li>
-        {% if request.user.profile.about_me %}
-            <li>{% trans "You wrote about yourself" %}: {{ profile_list.about_me }}</li>
-        {% else %}
-            <li>{% trans "You have not written detail information about yourself yet." %}</li>
-        {% endif %}
-        {% if request.user.profile.avatar %}
-            <li>{% trans "Your avatar" %}:<br>
-                <img src="{{ MEDIA_URL }}{{ profile_list.avatar.url }}" alt="{{ profile_list.avatar.url }}"
-                     class="img-thumbnail m-3" width="20%" height="20%"></li>
-        {% else %}
-            <li>{% trans "You have not chosen avatar yet" %}.</li>
-        {% endif %}
-    </ul>
+    {% cache 500 account request.user.id %}
+        <ul>
+            <li>{% trans "Your name" %}: {{ profile_list.name }}</li>
+            <li>{% trans "Your surname" %}: {{ profile_list.surname }}</li>
+            {% if request.user.profile.about_me %}
+                <li>{% trans "You wrote about yourself" %}: {{ profile_list.about_me }}</li>
+            {% else %}
+                <li>{% trans "You have not written detail information about yourself yet." %}</li>
+            {% endif %}
+            {% if request.user.profile.avatar %}
+                <li>{% trans "Your avatar" %}:<br>
+                    <img src="{{ MEDIA_URL }}{{ profile_list.avatar.url }}" alt="{{ profile_list.avatar.url }}"
+                         class="img-thumbnail m-3" width="20%" height="20%"></li>
+            {% else %}
+                <li>{% trans "You have not chosen avatar yet" %}.</li>
+            {% endif %}
+        </ul>
+    {% endcache %}
     <form action="{{ request.user.profile.pk }}/edit" method="get">
         <button class="btn btn-primary" type="submit" data-toggle="collapse" data-target="#collapseExample"
                 aria-expanded="false" aria-controls="collapseExample">{% trans "Edit account" %}

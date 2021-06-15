@@ -7,13 +7,13 @@ from projects.models import Project
 class ListProjectView(generic.ListView):
     model = Project
     context_object_name = 'projects'
-    template_name = 'project_index.html'
+    template_name = 'list_project.html'
 
 
 class DetailProjectView(generic.DetailView):
     model = Project
     context_object_name = 'project'
-    template_name = 'project_detail.html'
+    template_name = 'detail_project.html'
 
     def get(self, request, *args, **kwargs):
         pk = kwargs['pk']

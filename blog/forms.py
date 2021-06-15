@@ -12,11 +12,13 @@ class CategoryDocumentForm(forms.ModelForm):
 
 
 class PostDocumentForm(forms.ModelForm):
-    categories = forms.CharField(min_length=3, max_length=100, required=False)
+    categories = forms.CharField(min_length=3, max_length=100, required=False,
+                                 help_text='separated by space/через пробел')
+    image = forms.ImageField(required=False)
 
     class Meta:
         model = Post
-        fields = ('title', 'body', 'categories')
+        fields = ('title', 'body', 'image', 'categories')
 
 
 class CommentForm(forms.ModelForm):
@@ -37,7 +39,7 @@ class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        exclude = ['created_on', 'post', 'user']
+        exclude = ['created_on', 'post', 'image', 'user']
 
 
 class AccountForm(forms.ModelForm):

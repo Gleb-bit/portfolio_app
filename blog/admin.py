@@ -4,8 +4,8 @@ from .models import Post, Category
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'user')
-    list_filter = ('user', )
+    list_display = ('title', 'profile')
+    list_filter = ('profile', )
     search_fields = ('title', 'body')
 
 

@@ -18,7 +18,7 @@
     </form>
     <form action="/blog/delete/post/{{ post.id }}">
         <input type="hidden" value="{{ post.id }}" name="id">
-        {% if request.user.id == post.user.id %}
+        {% if request.user.id == post.profile.id %}
             <button class="btn btn-primary" type="submit" data-toggle="collapse"
                     data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                 {% trans 'Delete post'%}

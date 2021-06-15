@@ -25,6 +25,11 @@ class TestBlog(TestCase):
             'body': 'anything',
             'categories': 'test'
         }
+        self.edit_user_post_data = {
+            'title': 'First',
+            'body': 'anything',
+            'categories': 'test another_test'
+        }
         user = User.objects.create_user(**self.credentials)
         self.profile_data = {
             'user': user,
@@ -33,7 +38,7 @@ class TestBlog(TestCase):
         }
         profile = Profile.objects.create(**self.profile_data)
         category = Category.objects.create(name='anything')
-        post = Post.objects.create(title='title', body='body', user=profile)
+        post = Post.objects.create(title='title', body='body', profile=profile)
         post.categories.set([category])
 
     def test_create_comment(self):
@@ -49,4 +54,9 @@ class TestBlog(TestCase):
     def test_create_post(self):
         self.client.login(**self.credentials)
         response = self.client.post('/blog/create/post', self.user_post_data, follow=True)
+        self.assertRedirects(response, '/blog/')
+
+    def test_edit_post(self):
+        self.client.login(**self.credentials)
+        response = self.client.post('/blog/edit/post/1/', self.user_post_data, follow=True)
         self.assertRedirects(response, '/blog/')

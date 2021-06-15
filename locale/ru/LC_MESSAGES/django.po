@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-12 18:50+0500\n"
+"POT-Creation-Date: 2021-06-15 20:08+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,63 +19,6 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
-
-#: .\blog\templates\blog_category.html:11 .\blog\templates\blog_detail.html:14
-#: .\blog\templates\blog_index.html:13
-msgid "Categories"
-msgstr "Категории"
-
-#: .\blog\templates\blog_detail.html:7
-msgid "Detail blog"
-msgstr "Страница поста"
-
-#: .\blog\templates\blog_detail.html:21 .\blog\templates\blog_index.html:20
-msgid "There isn't any category"
-msgstr "Пока нет ни одной категории"
-
-#: .\blog\templates\blog_detail.html:29
-msgid "Edit post"
-msgstr "Редактировать пост"
-
-#: .\blog\templates\blog_detail.html:33
-msgid "Leave a comment:"
-msgstr "Оставить комментарий"
-
-#: .\blog\templates\blog_detail.html:44
-msgid "Submit"
-msgstr "Отправить"
-
-#: .\blog\templates\blog_detail.html:47
-msgid "Comments:"
-msgstr "Комментарии"
-
-#: .\blog\templates\blog_detail.html:53 .\blog\templates\blog_detail.html:56
-msgid "wrote at"
-msgstr "Написал"
-
-#: .\blog\templates\blog_detail.html:63
-msgid "Edit commentary"
-msgstr "Редактировать комментарий"
-
-#: .\blog\templates\blog_detail.html:70
-msgid "There isn't any comment yet"
-msgstr "Пока нет ни одного комментария"
-
-#: .\blog\templates\blog_index.html:5
-msgid "Blog Index"
-msgstr "Список постов"
-
-#: .\blog\templates\blog_index.html:10
-msgid "was written by"
-msgstr "был написан"
-
-#: .\blog\templates\blog_index.html:11
-msgid "man, who deleted his account"
-msgstr "человеком, который удалил свой аккаунт"
-
-#: .\blog\templates\blog_index.html:27
-msgid "Create new post"
-msgstr "Создать новый пост"
 
 #: .\blog\templates\create_post.html:8 .\blog\templates\create_post.html:11
 msgid "Create post"
@@ -98,46 +41,87 @@ msgstr "Подтвердить"
 msgid "Are you sure you want to delete this post"
 msgstr "Вы уверены, что хотите удалить этот пост"
 
-#: .\blog\templates\detail_account.html:8
-#: .\personal_portfolio\templates\base.html:29
+#: .\blog\templates\detail_account.html:9
+#: .\personal_portfolio\templates\base.html:47
 msgid "Detail account"
 msgstr "Мой аккаунт"
 
-#: .\blog\templates\detail_account.html:11
+#: .\blog\templates\detail_account.html:12
 msgid "Hello"
 msgstr "Привет"
 
-#: .\blog\templates\detail_account.html:11
+#: .\blog\templates\detail_account.html:12
 msgid "You can see information about you here"
 msgstr "Вы можете увидеть информацию о себе здесь"
 
-#: .\blog\templates\detail_account.html:13
+#: .\blog\templates\detail_account.html:15
 msgid "Your name"
 msgstr "Ваше имя"
 
-#: .\blog\templates\detail_account.html:14
+#: .\blog\templates\detail_account.html:16
 msgid "Your surname"
 msgstr "Ваша фамилия"
 
-#: .\blog\templates\detail_account.html:16
+#: .\blog\templates\detail_account.html:18
 msgid "You wrote about yourself"
 msgstr "Вы написали о себе"
 
-#: .\blog\templates\detail_account.html:18
+#: .\blog\templates\detail_account.html:20
 msgid "You have not written detail information about yourself yet."
 msgstr "Вы ещё ничего о себе подробного не написали"
 
-#: .\blog\templates\detail_account.html:21
+#: .\blog\templates\detail_account.html:23
 msgid "Your avatar"
 msgstr "Ваш аватар"
 
-#: .\blog\templates\detail_account.html:25
+#: .\blog\templates\detail_account.html:27
 msgid "You have not chosen avatar yet"
 msgstr "Вы ещё не выбрали аватар"
 
-#: .\blog\templates\detail_account.html:30
+#: .\blog\templates\detail_account.html:33
 msgid "Edit account"
 msgstr "Редактировать аккаунт"
+
+#: .\blog\templates\detail_post.html:8
+msgid "Detail blog"
+msgstr "Страница поста"
+
+#: .\blog\templates\detail_post.html:16 .\blog\templates\list_category.html:11
+#: .\blog\templates\list_post.html:14
+msgid "Categories"
+msgstr "Категории"
+
+#: .\blog\templates\detail_post.html:23 .\blog\templates\list_post.html:21
+msgid "There isn't any category"
+msgstr "Пока нет ни одной категории"
+
+#: .\blog\templates\detail_post.html:35
+msgid "Edit post"
+msgstr "Редактировать пост"
+
+#: .\blog\templates\detail_post.html:39
+msgid "Leave a comment:"
+msgstr "Оставить комментарий"
+
+#: .\blog\templates\detail_post.html:50
+msgid "Submit"
+msgstr "Отправить"
+
+#: .\blog\templates\detail_post.html:53
+msgid "Comments:"
+msgstr "Комментарии"
+
+#: .\blog\templates\detail_post.html:59 .\blog\templates\detail_post.html:62
+msgid "wrote at"
+msgstr "Написал"
+
+#: .\blog\templates\detail_post.html:69
+msgid "Edit commentary"
+msgstr "Редактировать комментарий"
+
+#: .\blog\templates\detail_post.html:76
+msgid "There isn't any comment yet"
+msgstr "Пока нет ни одного комментария"
 
 #: .\blog\templates\edit_account.html:8 .\blog\templates\edit_account.html:11
 msgid "Account editing"
@@ -168,8 +152,24 @@ msgstr "Удалить пост"
 msgid "Delete post (for admins)"
 msgstr "Удалить пост(для админов)"
 
+#: .\blog\templates\list_post.html:5
+msgid "List of posts"
+msgstr "Список постов"
+
+#: .\blog\templates\list_post.html:10
+msgid "was written by"
+msgstr "был написан"
+
+#: .\blog\templates\list_post.html:12
+msgid "man, who deleted his account"
+msgstr "человеком, который удалил свой аккаунт"
+
+#: .\blog\templates\list_post.html:28
+msgid "Create new post"
+msgstr "Создать новый пост"
+
 #: .\blog\templates\login.html:9 .\blog\templates\login.html:17
-#: .\personal_portfolio\templates\base.html:32
+#: .\personal_portfolio\templates\base.html:50
 msgid "Login"
 msgstr "Войти"
 
@@ -182,7 +182,7 @@ msgid "Sign up"
 msgstr "Зарегистрироваться"
 
 #: .\blog\templates\logout.html:9 .\blog\templates\logout.html:12
-#: .\personal_portfolio\templates\base.html:30
+#: .\personal_portfolio\templates\base.html:48
 msgid "Logout"
 msgstr "Выйти"
 
@@ -195,6 +195,7 @@ msgid "Registration"
 msgstr "Регистрация"
 
 #: .\personal_portfolio\templates\base.html:7
+#: .\projects\templates\detail_project.html:19
 msgid "GitHub"
 msgstr "Гитхаб"
 
@@ -206,23 +207,27 @@ msgstr "Домашняя"
 msgid "Blog"
 msgstr "Блог"
 
-#: .\personal_portfolio\templates\base.html:25
+#: .\personal_portfolio\templates\base.html:38
+msgid "Go"
+msgstr ""
+
+#: .\personal_portfolio\templates\base.html:43
 msgid "More"
 msgstr "Больше"
 
-#: .\projects\templates\project_detail.html:12
+#: .\projects\templates\detail_project.html:13
 msgid "About the project"
 msgstr "О проекте"
 
-#: .\projects\templates\project_detail.html:15
+#: .\projects\templates\detail_project.html:16
 msgid "Technology used"
 msgstr "Использованная технология"
 
-#: .\projects\templates\project_index.html:5
+#: .\projects\templates\list_project.html:5
 msgid "Projects"
 msgstr "Проекты"
 
-#: .\projects\templates\project_index.html:16
+#: .\projects\templates\list_project.html:16
 msgid "Read More"
 msgstr "Читать больше"
 
@@ -1417,3 +1422,6 @@ msgstr ""
 #: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:249
 msgid "Connect, get help, or contribute"
 msgstr ""
+
+#~ msgid "Blog Index"
+#~ msgstr "Список постов"

@@ -1,11 +1,13 @@
 {% extends "base.html" %}
+{% load i18n %}
+{% load cache %}
 {% block page_content %}
-    {% load i18n %}
     <html lang="en">
     <head>
         <meta charset="UTF-8">
         <title>{% trans "Detail blog" %}</title>
     </head>
+        {% cache 500 post request.user.id %}
     <div class="col-md-8 offset-md-2">
         <h1>{{ post.title }}</h1>
         <small>
@@ -13,16 +15,18 @@
             {% if post.categories.all %}
                 {% trans 'Categories' %} :&nbsp;
                 {% for category in post.categories.all %}
-                    <a href="{% url 'blog_category' category.name %}">
-                        {{ category.name }}
-                    </a>&nbsp;
+                    <a href="{% url 'list_category' category.name %}">{{ category.name }}</a>&nbsp;
                 {% endfor %}
             {% else %}
                 {% trans "There isn't any category" %}
             {% endif %}
         </small>
         <p>{{ post.body | linebreaks }}</p>
-        {% if request.user.id == post.user.id %}
+        {% if post.image %}
+            <img src="{{ MEDIA_URL }}{{ post.image.url }}" alt=""
+                 width="800px" height="800px">
+        {% endif %}
+        {% if request.user.id == post.profile.id %}
             <form action="/blog/edit/post/{{ post.id }}" method="get">
                 <button class="btn btn-primary" type="submit" data-toggle="collapse"
                         data-target="#collapseExample"
@@ -70,4 +74,5 @@
             <h3>{% trans "There isn't any comment yet" %}</h3>
         {% endif %}
         </div>
+        {% endcache %}
 {% endblock %}

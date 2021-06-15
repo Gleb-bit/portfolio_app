@@ -3,9 +3,9 @@ from django.urls import path, include
 from .views import *
 
 urlpatterns = [
-    path('', BlogIndexView.as_view(), name="blog_index"),
-    path('<int:pk>/', BlogDetailView.as_view(), name="blog_detail"),
-    path('<category>/', BlogCategoryView.as_view(), name="blog_category"),
+    path('', ListPostView.as_view(), name="list_post"),
+    path('<int:pk>/', DetailPostView.as_view(), name="detail_post"),
+    path('<category>/', ListCategoryView.as_view(), name="list_category"),
     path('create/post', CreatePostView.as_view(), name='create_post'),
     path('edit/comment/<int:pk>/', EditCommentView.as_view(), name='edit_comment'),
     path('edit/post/<int:pk>/', EditPostView.as_view(), name='edit_post'),
