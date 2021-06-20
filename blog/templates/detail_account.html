@@ -10,7 +10,7 @@
     </head>
     <body>
     <h2 class="m-3">{% trans "Hello" %}, {{ profile_list.name }}. {% trans "You can see information about you here" %}.</h2>
-    {% cache 500 account request.user.id %}
+    {% cache 500 account request.user.id LANGUAGE_CODE %}
         <ul>
             <li>{% trans "Your name" %}: {{ profile_list.name }}</li>
             <li>{% trans "Your surname" %}: {{ profile_list.surname }}</li>

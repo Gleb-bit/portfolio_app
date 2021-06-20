@@ -18,10 +18,21 @@ from django.contrib import admin
 from django.urls import path, include
 
 from personal_portfolio import settings
+from rest_framework import routers
+
+from blog.api import *
+
+router = routers.DefaultRouter()
+router.register('posts', PostViewSet, 'posts')
+router.register('categories', CategoryViewSet, 'categories')
+router.register('comments', CommentViewSet, 'comments')
+router.register('profiles', ProfileViewSet, 'profiles')
 
 urlpatterns = [
-                  path('admin/', admin.site.urls),
-                  path("projects/", include("projects.urls")),
-                  path("blog/", include('blog.urls')),
-                  path('i18n', include('django.conf.urls.i18n'))
-              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('admin/', admin.site.urls),
+    path("projects/", include("projects.urls")),
+    path("blog/", include('blog.urls')),
+    path('i18n', include('django.conf.urls.i18n')),
+    path('api/', include(router.urls)),
+    path('api/api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

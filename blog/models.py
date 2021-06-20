@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.core.cache import cache
 from django.core.cache.utils import make_template_fragment_key
 from django.db import models
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
 
@@ -47,7 +47,7 @@ class Post(models.Model):
 
 @receiver(post_save, sender=Post, dispatch_uid="clear_cache_post")
 def update_post(sender, **kwargs):
-    key = make_template_fragment_key('post', [kwargs['instance'].profile.id])
+    key = make_template_fragment_key('post', [kwargs['instance'].user.id])
     cache.delete(key)
 
 
@@ -62,6 +62,18 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.author
+
+
+@receiver(post_save, sender=Comment, dispatch_uid="clear_cache_comment")
+def update_comment(sender, **kwargs):
+    key = make_template_fragment_key('post', [kwargs['instance'].user.id])
+    cache.delete(key)
+
+
+@receiver(post_delete, sender=Comment, dispatch_uid="clear_cache_comment")
+def delete_comment(sender, **kwargs):
+    key = make_template_fragment_key('post', [kwargs['instance'].user.id])
+    cache.delete(key)
 
 
 class Profile(models.Model):
@@ -79,6 +91,6 @@ class Profile(models.Model):
 
 
 @receiver(post_save, sender=Profile, dispatch_uid="clear_cache_profile")
-def update_post(sender, **kwargs):
+def update_profile(sender, **kwargs):
     key = make_template_fragment_key('account', [kwargs['instance'].user.id])
     cache.delete(key)

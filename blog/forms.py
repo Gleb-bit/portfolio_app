@@ -36,17 +36,18 @@ class CommentForm(forms.ModelForm):
             "placeholder": "Leave a comment!"
         })
     )
+    image = forms.ImageField(required=False)
 
     class Meta:
         model = Comment
-        exclude = ['created_on', 'post', 'image', 'user']
+        exclude = ['created_on', 'post', 'user']
 
 
 class AccountForm(forms.ModelForm):
     name = forms.CharField(help_text=' (Name)')
     surname = forms.CharField(help_text=' (Surname)')
     about_me = forms.CharField(help_text=' (About me)', required=False)
-    avatar = forms.ImageField(max_length=100, required=False)
+    avatar = forms.ImageField(required=False)
 
     class Meta:
         model = Profile

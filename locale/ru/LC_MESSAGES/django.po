@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-15 20:08+0500\n"
+"POT-Creation-Date: 2021-06-20 19:00+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -91,35 +91,39 @@ msgstr "Страница поста"
 msgid "Categories"
 msgstr "Категории"
 
-#: .\blog\templates\detail_post.html:23 .\blog\templates\list_post.html:21
+#: .\blog\templates\detail_post.html:21 .\blog\templates\list_post.html:21
 msgid "There isn't any category"
 msgstr "Пока нет ни одной категории"
 
-#: .\blog\templates\detail_post.html:35
+#: .\blog\templates\detail_post.html:33
 msgid "Edit post"
 msgstr "Редактировать пост"
 
-#: .\blog\templates\detail_post.html:39
-msgid "Leave a comment:"
+#: .\blog\templates\detail_post.html:37
+msgid "Leave a comment"
 msgstr "Оставить комментарий"
 
-#: .\blog\templates\detail_post.html:50
+#: .\blog\templates\detail_post.html:49
+msgid "image"
+msgstr "изображение"
+
+#: .\blog\templates\detail_post.html:51
 msgid "Submit"
 msgstr "Отправить"
 
-#: .\blog\templates\detail_post.html:53
-msgid "Comments:"
+#: .\blog\templates\detail_post.html:54
+msgid "Comments"
 msgstr "Комментарии"
 
-#: .\blog\templates\detail_post.html:59 .\blog\templates\detail_post.html:62
+#: .\blog\templates\detail_post.html:60 .\blog\templates\detail_post.html:63
 msgid "wrote at"
 msgstr "Написал"
 
-#: .\blog\templates\detail_post.html:69
+#: .\blog\templates\detail_post.html:73
 msgid "Edit commentary"
 msgstr "Редактировать комментарий"
 
-#: .\blog\templates\detail_post.html:76
+#: .\blog\templates\detail_post.html:80
 msgid "There isn't any comment yet"
 msgstr "Пока нет ни одного комментария"
 
@@ -127,7 +131,7 @@ msgstr "Пока нет ни одного комментария"
 msgid "Account editing"
 msgstr "Редактирование аккаунта"
 
-#: .\blog\templates\edit_account.html:16 .\blog\templates\edit_comment.html:16
+#: .\blog\templates\edit_account.html:16 .\blog\templates\edit_comment.html:17
 #: .\blog\templates\edit_post.html:16
 msgid "Save"
 msgstr "Сохранить"
@@ -136,7 +140,7 @@ msgstr "Сохранить"
 msgid "Comment editing"
 msgstr "Редактирование комментария"
 
-#: .\blog\templates\edit_comment.html:23
+#: .\blog\templates\edit_comment.html:25
 msgid "Delete commentary"
 msgstr "Удалить комментарий"
 
@@ -147,10 +151,6 @@ msgstr "Редактирование поста"
 #: .\blog\templates\edit_post.html:24
 msgid "Delete post"
 msgstr "Удалить пост"
-
-#: .\blog\templates\edit_post.html:29
-msgid "Delete post (for admins)"
-msgstr "Удалить пост(для админов)"
 
 #: .\blog\templates\list_post.html:5
 msgid "List of posts"
@@ -626,7 +626,7 @@ msgstr ""
 
 #: .\venv\Lib\site-packages\django\db\models\fields\files.py:375
 msgid "Image"
-msgstr ""
+msgstr "Изображение"
 
 #: .\venv\Lib\site-packages\django\db\models\fields\json.py:18
 msgid "A JSON object"
@@ -1422,6 +1422,9 @@ msgstr ""
 #: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:249
 msgid "Connect, get help, or contribute"
 msgstr ""
+
+#~ msgid "Delete post (for admins)"
+#~ msgstr "Удалить пост(для админов)"
 
 #~ msgid "Blog Index"
 #~ msgstr "Список постов"

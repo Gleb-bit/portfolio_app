@@ -7,72 +7,78 @@
         <meta charset="UTF-8">
         <title>{% trans "Detail blog" %}</title>
     </head>
-        {% cache 500 post request.user.id %}
-    <div class="col-md-8 offset-md-2">
-        <h1>{{ post.title }}</h1>
-        <small>
-            {{ post.created_on|date:"d.m.Y H:i:s" }} |&nbsp;
-            {% if post.categories.all %}
-                {% trans 'Categories' %} :&nbsp;
-                {% for category in post.categories.all %}
-                    <a href="{% url 'list_category' category.name %}">{{ category.name }}</a>&nbsp;
+    {% cache 500 post request.user.id LANGUAGE_CODE %}
+        <div class="col-md-8 offset-md-2">
+            <h1>{{ post.title }}</h1>
+            <small>
+                {{ post.created_on|date:"d.m.Y H:i:s" }} |&nbsp;
+                {% if post.categories.all %}
+                    {% trans 'Categories' %} :&nbsp;
+                    {% for category in post.categories.all %}
+                        <a href="{% url 'list_category' category.name %}">{{ category.name }}</a>&nbsp;
+                    {% endfor %}
+                {% else %}
+                    {% trans "There isn't any category" %}
+                {% endif %}
+            </small>
+            <p>{{ post.body | linebreaks }}</p>
+            {% if post.image %}
+                <img src="{{ MEDIA_URL }}{{ post.image.url }}" alt=""
+                     width="800px" height="800px">
+            {% endif %}
+            {% if request.user.id == post.profile.id %}
+                <form action="/blog/edit/post/{{ post.id }}" method="get">
+                    <button class="btn btn-primary" type="submit" data-toggle="collapse"
+                            data-target="#collapseExample"
+                            aria-expanded="false" aria-controls="collapseExample">{% trans "Edit post" %}
+                    </button>
+                </form>
+            {% endif %}
+            <h3>{% trans "Leave a comment" %}: </h3>
+            <form action="/blog/{{ post.pk }}/" method="post">
+                {% csrf_token %}
+                {% if not request.user.is_authenticated %}
+                    <div class="form-group">
+                        {{ form.author }}
+                    </div>
+                {% endif %}
+                <div class="form-group">
+                    {{ form.body }}
+                </div>
+                <div class="form-group">
+                    {% trans "image" %}: {{ form.image }}
+                </div>
+                <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
+            </form>
+            {% if comments %}
+                <h3>{% trans "Comments" %}:</h3>
+                {% for comment in comments %}
+                    {% if comment.user.profile.avatar %}
+                        </div>
+                        <img class="col-md-2" src="{{ MEDIA_URL }}{{ comment.user.profile.avatar.url }}" alt=""
+                             width="100px" height="100px">&nbsp;&nbsp;
+                        <b>{{ comment.author }}</b> {% trans "wrote at" %} {{ comment.created_on|date:"H:i:s d.m.Y" }}
+                        <div class="col-md-8 offset-md-2">
+                    {% else %}
+                        <b>{{ comment.author }}</b> {% trans "wrote at" %} {{ comment.created_on|date:"H:i:s d.m.Y" }}
+                    {% endif %}
+                    <p>{{ comment.body }}</p>
+                    {% if comment.image %}
+                        <img src="{{ MEDIA_URL }}{{ comment.image.url }}" alt="" width="30%" height="30%">
+                    {% endif %}
+                    {% if request.user.profile %}
+                        <form action="/blog/edit/comment/{{ comment.id }}" method="get">
+                            <button class="btn btn-primary" type="submit" data-toggle="collapse"
+                                    data-target="#collapseExample"
+                                    aria-expanded="false" aria-controls="collapseExample">{% trans "Edit commentary" %}
+                            </button>
+                        </form>
+                    {% endif %}
+                    <hr>
                 {% endfor %}
             {% else %}
-                {% trans "There isn't any category" %}
+                <h3>{% trans "There isn't any comment yet" %}</h3>
             {% endif %}
-        </small>
-        <p>{{ post.body | linebreaks }}</p>
-        {% if post.image %}
-            <img src="{{ MEDIA_URL }}{{ post.image.url }}" alt=""
-                 width="800px" height="800px">
-        {% endif %}
-        {% if request.user.id == post.profile.id %}
-            <form action="/blog/edit/post/{{ post.id }}" method="get">
-                <button class="btn btn-primary" type="submit" data-toggle="collapse"
-                        data-target="#collapseExample"
-                        aria-expanded="false" aria-controls="collapseExample">{% trans "Edit post" %}
-                </button>
-            </form>
-        {% endif %}
-        <h3>{% trans "Leave a comment:" %}</h3>
-        <form action="/blog/{{ post.pk }}/" method="post">
-            {% csrf_token %}
-            {% if not request.user.is_authenticated %}
-                <div class="form-group">
-                    {{ form.author }}
-                </div>
-            {% endif %}
-            <div class="form-group">
-                {{ form.body }}
             </div>
-            <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
-        </form>
-        {% if comments %}
-            <h3>{% trans "Comments:" %}</h3>
-            {% for comment in comments %}
-                {% if comment.user.profile.avatar %}
-                    </div>
-                    <img class="col-md-2" src="{{ MEDIA_URL }}{{ comment.user.profile.avatar.url }}" alt=""
-                         width="100px" height="100px">&nbsp;&nbsp;
-                    <b>{{ comment.author }}</b> {% trans "wrote at" %} {{ comment.created_on|date:"H:i:s d.m.Y" }}
-                    <div class="col-md-8 offset-md-2">
-                {% else %}
-                    <b>{{ comment.author }}</b> {% trans "wrote at" %} {{ comment.created_on|date:"H:i:s d.m.Y" }}
-                {% endif %}
-                <p>{{ comment.body }}</p>
-                {% if request.user.id == comment.user.id %}
-                    <form action="/blog/edit/comment/{{ comment.id }}" method="get">
-                        <button class="btn btn-primary" type="submit" data-toggle="collapse"
-                                data-target="#collapseExample"
-                                aria-expanded="false" aria-controls="collapseExample">{% trans "Edit commentary" %}
-                        </button>
-                    </form>
-                {% endif %}
-                <hr>
-            {% endfor %}
-        {% else %}
-            <h3>{% trans "There isn't any comment yet" %}</h3>
-        {% endif %}
-        </div>
-        {% endcache %}
+    {% endcache %}
 {% endblock %}

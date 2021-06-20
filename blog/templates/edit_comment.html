@@ -9,13 +9,15 @@
     </head>
     <body>
     <h2 class="mt-3">{% trans "Comment editing" %}</h2>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-primary" type="submit" data-toggle="collapse" data-target="#collapseExample"
-                aria-expanded="false" aria-controls="collapseExample">{% trans "Save" %}
-        </button>
-    </form>
+    {% if request.user.id == comment.user.id %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-primary" type="submit" data-toggle="collapse" data-target="#collapseExample"
+                    aria-expanded="false" aria-controls="collapseExample">{% trans "Save" %}
+            </button>
+        </form>
+    {% endif %}
     <form action="/blog/delete/comment/{{ comment.id }}">
         <input type="hidden" value="{{ post.id }}" name="id">
         <button class="btn btn-primary" type="submit" data-toggle="collapse"

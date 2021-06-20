@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'projects',
     'blog',
     'social_django',
+    'rest_framework',
+    'drf_link_header_pagination'
 ]
 
 LOGIN_URL = '/blog/user/login/'
@@ -71,6 +73,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'drf_link_header_pagination.LinkHeaderPagination',
+    'PAGE_SIZE': 10
+}
 
 ROOT_URLCONF = 'personal_portfolio.urls'
 

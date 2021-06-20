@@ -202,9 +202,9 @@ class DeleteCommentView(generic.DeleteView):
 class DeleteAnothersCommentView(PermissionRequiredMixin, generic.DeleteView):
     permission_required = ('blog.deleteanotherscomment_Profile')
     permission_denied_message = "You haven't permission for this"
-    model = Post
+    model = Comment
     success_url = '/blog/'
-    template_name = 'delete_post_confirm.html'
+    template_name = 'delete_comment_confirm.html'
 
 
 class DetailAccountView(generic.DetailView):
