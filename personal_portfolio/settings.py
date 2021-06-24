@@ -46,11 +46,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'projects',
-    'blog',
+    'django.contrib.admindocs',
+    'projects.apps.ProjectsConfig',
+    'blog.apps.BlogConfig',
     'social_django',
     'rest_framework',
-    'drf_link_header_pagination'
+    'drf_link_header_pagination',
+    'drf_yasg'
 ]
 
 LOGIN_URL = '/blog/user/login/'

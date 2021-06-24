@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-20 19:00+0500\n"
+"POT-Creation-Date: 2021-06-21 22:37+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,21 +28,29 @@ msgstr "Создать пост"
 msgid "Create"
 msgstr "Создать"
 
-#: .\blog\templates\delete_comment_confirm.html:6
+#: .\blog\templates\delete_comment_confirm.html:7
+msgid "Confirmation deleting comment"
+msgstr "Подтверждение удаления комментария"
+
+#: .\blog\templates\delete_comment_confirm.html:11
 msgid "Are you sure you want to delete comment"
 msgstr "Вы уверены, что хотите удалить комментарий"
 
-#: .\blog\templates\delete_comment_confirm.html:9
-#: .\blog\templates\delete_post_confirm.html:9
+#: .\blog\templates\delete_comment_confirm.html:14
+#: .\blog\templates\delete_post_confirm.html:14
 msgid "Confirm"
 msgstr "Подтвердить"
 
-#: .\blog\templates\delete_post_confirm.html:6
+#: .\blog\templates\delete_post_confirm.html:7
+msgid "Confirmation deleting post"
+msgstr "Подтверждение удаления комментария"
+
+#: .\blog\templates\delete_post_confirm.html:11
 msgid "Are you sure you want to delete this post"
 msgstr "Вы уверены, что хотите удалить этот пост"
 
 #: .\blog\templates\detail_account.html:9
-#: .\personal_portfolio\templates\base.html:47
+#: .\personal_portfolio\templates\base.html:48
 msgid "Detail account"
 msgstr "Мой аккаунт"
 
@@ -83,15 +91,15 @@ msgid "Edit account"
 msgstr "Редактировать аккаунт"
 
 #: .\blog\templates\detail_post.html:8
-msgid "Detail blog"
+msgid "Detail post"
 msgstr "Страница поста"
 
-#: .\blog\templates\detail_post.html:16 .\blog\templates\list_category.html:11
-#: .\blog\templates\list_post.html:14
+#: .\blog\templates\detail_post.html:16 .\blog\templates\list_category.html:16
+#: .\blog\templates\list_post.html:19
 msgid "Categories"
 msgstr "Категории"
 
-#: .\blog\templates\detail_post.html:21 .\blog\templates\list_post.html:21
+#: .\blog\templates\detail_post.html:21 .\blog\templates\list_post.html:26
 msgid "There isn't any category"
 msgstr "Пока нет ни одной категории"
 
@@ -152,24 +160,28 @@ msgstr "Редактирование поста"
 msgid "Delete post"
 msgstr "Удалить пост"
 
-#: .\blog\templates\list_post.html:5
+#: .\blog\templates\list_category.html:7
+msgid "List of categories"
+msgstr "Список категорий"
+
+#: .\blog\templates\list_post.html:7 .\blog\templates\list_post.html:10
 msgid "List of posts"
 msgstr "Список постов"
 
-#: .\blog\templates\list_post.html:10
+#: .\blog\templates\list_post.html:15
 msgid "was written by"
 msgstr "был написан"
 
-#: .\blog\templates\list_post.html:12
+#: .\blog\templates\list_post.html:17
 msgid "man, who deleted his account"
 msgstr "человеком, который удалил свой аккаунт"
 
-#: .\blog\templates\list_post.html:28
+#: .\blog\templates\list_post.html:33
 msgid "Create new post"
 msgstr "Создать новый пост"
 
 #: .\blog\templates\login.html:9 .\blog\templates\login.html:17
-#: .\personal_portfolio\templates\base.html:50
+#: .\personal_portfolio\templates\base.html:51
 msgid "Login"
 msgstr "Войти"
 
@@ -182,7 +194,7 @@ msgid "Sign up"
 msgstr "Зарегистрироваться"
 
 #: .\blog\templates\logout.html:9 .\blog\templates\logout.html:12
-#: .\personal_portfolio\templates\base.html:48
+#: .\personal_portfolio\templates\base.html:49
 msgid "Logout"
 msgstr "Выйти"
 
@@ -194,40 +206,48 @@ msgstr "Вы успешно вышли из учетной записи"
 msgid "Registration"
 msgstr "Регистрация"
 
-#: .\personal_portfolio\templates\base.html:7
-#: .\projects\templates\detail_project.html:19
+#: .\personal_portfolio\templates\base.html:8
+#: .\projects\templates\detail_project.html:24
 msgid "GitHub"
 msgstr "Гитхаб"
 
-#: .\personal_portfolio\templates\base.html:16
+#: .\personal_portfolio\templates\base.html:17
 msgid "Home"
 msgstr "Домашняя"
 
-#: .\personal_portfolio\templates\base.html:19
+#: .\personal_portfolio\templates\base.html:20
 msgid "Blog"
 msgstr "Блог"
 
-#: .\personal_portfolio\templates\base.html:38
+#: .\personal_portfolio\templates\base.html:39
 msgid "Go"
-msgstr ""
+msgstr "Сменить"
 
-#: .\personal_portfolio\templates\base.html:43
+#: .\personal_portfolio\templates\base.html:44
 msgid "More"
 msgstr "Больше"
 
-#: .\projects\templates\detail_project.html:13
+#: .\projects\templates\detail_project.html:9
+msgid "Detail project"
+msgstr "Инфо о проекте"
+
+#: .\projects\templates\detail_project.html:18
 msgid "About the project"
 msgstr "О проекте"
 
-#: .\projects\templates\detail_project.html:16
+#: .\projects\templates\detail_project.html:21
 msgid "Technology used"
 msgstr "Использованная технология"
 
-#: .\projects\templates\list_project.html:5
+#: .\projects\templates\list_project.html:8
+msgid "List of projects"
+msgstr "Список проектов"
+
+#: .\projects\templates\list_project.html:10
 msgid "Projects"
 msgstr "Проекты"
 
-#: .\projects\templates\list_project.html:16
+#: .\projects\templates\list_project.html:21
 msgid "Read More"
 msgstr "Читать больше"
 

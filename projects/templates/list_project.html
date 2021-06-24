@@ -2,6 +2,11 @@
 {% load static %}
 {% load i18n %}
 {% block page_content %}
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% trans "List of projects" %}</title>
+    </head>
     <h1 class="mt-2">{% trans "Projects" %}</h1>
     <div class="row">
         {% for project in projects %}

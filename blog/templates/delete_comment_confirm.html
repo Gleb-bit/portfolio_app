@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block page_content %}
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% trans "Confirmation deleting comment" %}</title>
+    </head>
     <form method="post">
         {% csrf_token %}
         <h2 class="mt-4">{% trans "Are you sure you want to delete comment" %}, "{{ object }}"?</h2>

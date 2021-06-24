@@ -24,39 +24,54 @@ def post_directory_path(instance, filename):
 
 
 class Category(models.Model):
+    """
+    Return a category
+    """
     name = models.CharField(max_length=20)
 
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = 'categories'
+
 
 class Post(models.Model):
+    """
+    Return a post with certain fields. Profile can have multiple posts.
+    One post can have multiple categories, such as one category can have multiple posts
+    """
     title = models.CharField(max_length=25)
     body = models.TextField()
     image = models.ImageField(blank=True, upload_to=post_directory_path)
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
-    categories = models.ManyToManyField('Category', related_name='posts', blank=True)
+    categories = models.ManyToManyField(Category, related_name='posts', blank=True)
     profile = models.ForeignKey('Profile', verbose_name='User',
                                 on_delete=models.CASCADE,
-                                related_name='profile')
+                                related_name='posts')
 
     def __str__(self):
         return self.title
 
 
 @receiver(post_save, sender=Post, dispatch_uid="clear_cache_post")
-def update_post(sender, **kwargs):
-    key = make_template_fragment_key('post', [kwargs['instance'].user.id])
+def update_post(sender, instance, **kwargs):
+    key = make_template_fragment_key('post', [instance.profile.user.id, 'en'])
+    cache.delete(key)
+    key = make_template_fragment_key('post', [instance.profile.user.id, 'ru'])
     cache.delete(key)
 
 
 class Comment(models.Model):
+    """
+    Return a comment with certain fields. Post can have multiple comments, and so can the user
+    """
     author = models.CharField(max_length=60, blank=True)
     body = models.TextField()
     image = models.ImageField(upload_to=comment_directory_path, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
-    post = models.ForeignKey('Post', on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     user = models.ForeignKey(User, default=None, null=True, verbose_name='Пользователь', on_delete=models.CASCADE,
                              related_name='comments')
 
@@ -65,18 +80,23 @@ class Comment(models.Model):
 
 
 @receiver(post_save, sender=Comment, dispatch_uid="clear_cache_comment")
-def update_comment(sender, **kwargs):
-    key = make_template_fragment_key('post', [kwargs['instance'].user.id])
-    cache.delete(key)
+def update_comment(sender, instance, **kwargs):
+    for language in ('en', 'ru'):
+        key = make_template_fragment_key('post', [instance.user.id, language])
+        cache.delete(key)
 
 
 @receiver(post_delete, sender=Comment, dispatch_uid="clear_cache_comment")
-def delete_comment(sender, **kwargs):
-    key = make_template_fragment_key('post', [kwargs['instance'].user.id])
-    cache.delete(key)
+def delete_comment(sender, instance, **kwargs):
+    for language in ('en', 'ru'):
+        key = make_template_fragment_key('post', [instance.user.id, language])
+        cache.delete(key)
 
 
 class Profile(models.Model):
+    """
+    Return a profile with certain fields. One profile corresponds to one profile
+    """
     user = models.OneToOneField(User, max_length=25, on_delete=models.CASCADE)
     name = models.CharField(max_length=25)
     surname = models.CharField(max_length=25)
@@ -91,6 +111,7 @@ class Profile(models.Model):
 
 
 @receiver(post_save, sender=Profile, dispatch_uid="clear_cache_profile")
-def update_profile(sender, **kwargs):
-    key = make_template_fragment_key('account', [kwargs['instance'].user.id])
-    cache.delete(key)
+def update_profile(sender, instance, **kwargs):
+    for language in ('en', 'ru'):
+        key = make_template_fragment_key('account', [instance.user.id, language])
+        cache.delete(key)

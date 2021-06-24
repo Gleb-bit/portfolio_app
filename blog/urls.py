@@ -1,8 +1,7 @@
 from django.urls import path, include
+from rest_framework.urlpatterns import format_suffix_patterns
 
 from .views import *
-
-from .api import CategoryDetail
 
 urlpatterns = [
     path('', ListPostView.as_view(), name="list_post"),
@@ -21,3 +20,5 @@ urlpatterns = [
     path('user/<int:pk>', DetailAccountView.as_view(), name='detail_account'),
     path('user/<int:pk>/edit', EditAccountView.as_view(), name='edit_account'),
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)

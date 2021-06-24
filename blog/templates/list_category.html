@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block page_content %}
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% trans "List of categories" %}</title>
+    </head>
     <div class="col-md-8 offset-md-2">
         <h1>{{ category | title }}</h1>
         <hr>
