@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="db [2]" uuid="0352f10a-1e40-41c6-bbff-1045b968815b">
+    <data-source source="LOCAL" name="db" uuid="6035758f-cbbf-4883-bfc0-aa4f85d7c2db">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:D:\github projects\rp-portfolio\db.sqlite3</jdbc-url>
+      <jdbc-url>jdbc:sqlite:D:\github projects\portfolio_app\db.sqlite3</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
       <libraries>
         <library>

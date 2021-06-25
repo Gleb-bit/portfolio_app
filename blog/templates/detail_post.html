@@ -7,7 +7,7 @@
         <meta charset="UTF-8">
         <title>{% trans "Detail post" %}</title>
     </head>
-    {% cache 500 post request.user.id LANGUAGE_CODE %}
+    {% cache 500 post request.user.id post.pk LANGUAGE_CODE %}
         <div class="col-md-8 offset-md-2">
             <h1>{{ post.title }}</h1>
             <small>
@@ -35,7 +35,7 @@
                 </form>
             {% endif %}
             <h3>{% trans "Leave a comment" %}: </h3>
-            <form action="/blog/{{ post.pk }}/" method="post">
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% if not request.user.is_authenticated %}
                     <div class="form-group">
@@ -48,7 +48,8 @@
                 <div class="form-group">
                     {% trans "image" %}: {{ form.image }}
                 </div>
-                <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
+                <button type="submit" class="btn btn-primary" data-toggle="collapse" data-target="#collapseExample"
+                        aria-expanded="false" aria-controls="collapseExample">{% trans "Submit" %}</button>
             </form>
             {% if comments %}
                 <h3>{% trans "Comments" %}:</h3>
@@ -66,7 +67,7 @@
                     {% if comment.image %}
                         <img src="{{ MEDIA_URL }}{{ comment.image.url }}" alt="" width="30%" height="30%">
                     {% endif %}
-                    {% if request.user.profile %}
+                    {% if request.user.id == comment.user.id %}
                         <form action="/blog/edit/comment/{{ comment.id }}" method="get">
                             <button class="btn btn-primary" type="submit" data-toggle="collapse"
                                     data-target="#collapseExample"

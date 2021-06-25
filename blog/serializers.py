@@ -33,10 +33,11 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
 
 class ProfileSerializer(serializers.HyperlinkedModelSerializer):
     posts = serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='posts-detail')
+    user = serializers.ReadOnlyField(source='user.username')
 
     class Meta:
         model = Profile
-        fields = ['id', 'name', 'surname', 'about_me', 'avatar', 'posts', ]
+        fields = ['id', 'name', 'surname', 'about_me', 'avatar', 'posts', 'user']
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):

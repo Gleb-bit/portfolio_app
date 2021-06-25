@@ -14,11 +14,12 @@ class ListCategoryView(generic.ListView):
 
     def get(self, request, *args, **kwargs):
         category = kwargs['category']
-        posts = Post.objects.filter(categories__name__contains=category).order_by('-created_on')
+        posts = Post.objects.filter(categories__name=category).order_by('-created_on')
         context = {
             "category": category,
             "posts": posts
         }
+        print(posts)
         return render(request, "list_category.html", context)
 
 
@@ -55,17 +56,23 @@ class CreatePostView(LoginRequiredMixin, generic.CreateView):
         return render(request, 'create_post.html', context={'form': blog_form})
 
     def set_or_not_categories(self, form, **kwargs):
+        categories = []
+
+        instance = Post.objects.create(title=kwargs['title'], body=kwargs['body'], profile=kwargs['profile'],
+                                       image=kwargs['image'])
+
         if form.cleaned_data['categories']:
-            categories = Category.objects.create(name=form.cleaned_data['categories'])
-            instance = Post.objects.get_or_create(title=kwargs['title'], body=kwargs['body'], profile=kwargs['profile'],
-                                                  image=kwargs['image'])[0]
-            instance.categories.set([categories])
+
+            for category in form.cleaned_data['categories'].split():
+                categories.append(Category.objects.get_or_create(name=category)[0])
+
+            instance.categories.set(categories)
 
 
 class EditPostView(generic.UpdateView):
-    form_class = PostDocumentForm
-    model = Post
+    queryset = Post.objects.all()
     template_name = 'edit_post.html'
+    context_object_name = 'post'
     success_url = '/blog/'
 
     def form_valid(self, form):
@@ -116,7 +123,7 @@ class EditPostView(generic.UpdateView):
         }
         form = PostDocumentForm(initial=form_data)
 
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {'form': form, 'post': object})
 
     def add_category(self, post_categories):
         categories = []
@@ -155,6 +162,8 @@ class DetailPostView(generic.DetailView):
 
         if form.is_valid():
             author = self.check_user_authenticated(request, form)
+            print(form.cleaned_data)
+            print(form.cleaned_data['image'])
 
             comment = Comment(
                 author=author,
@@ -185,7 +194,8 @@ class EditCommentView(generic.UpdateView):
 
     def get_success_url(self):
         queryset = super().get_queryset()
-        post = Post.objects.filter(id=queryset.filter()[0].post_id)[0]
+        current_comment = queryset.filter(pk=self.object.pk)[0]
+        post = Post.objects.filter(id=current_comment.post_id)[0]
         return f'/blog/{post.pk}/'
 
 
@@ -195,7 +205,8 @@ class DeleteCommentView(generic.DeleteView):
 
     def get_success_url(self):
         queryset = super().get_queryset()
-        post = Post.objects.filter(id=queryset.filter()[0].post_id)[0]
+        current_comment = queryset.filter(pk=self.object.pk)[0]
+        post = Post.objects.filter(id=current_comment.post_id)[0]
         return f'/blog/{post.pk}/'
 
 
@@ -230,11 +241,9 @@ class RegisterView(generic.View):
         return render(request, 'register.html', {'form': form})
 
     def post(self, request):
-
         form = ExtendedRegisterForm(request.POST, request.FILES)
 
         if form.is_valid():
-
             user = form.save()
 
             name = form.cleaned_data.get('name')
@@ -249,9 +258,10 @@ class RegisterView(generic.View):
 
             user = authenticate(username=username, password=raw_password)
             login(request, user)
+
             return redirect('/blog')
-        else:
-            form = ExtendedRegisterForm()
+
+        form = ExtendedRegisterForm()
         return render(request, 'register.html', {'form': form})
 
 
