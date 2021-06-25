@@ -1,7 +1,7 @@
 from django.core.cache import cache
 from django.core.cache.utils import make_template_fragment_key
+from django.core.signals import request_started
 from django.db import models
-from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
@@ -18,8 +18,11 @@ class Project(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        ordering = ['title']
 
-@receiver(post_save, sender=Project, dispatch_uid="clear_cache_project")
-def update_project(sender, **kwargs):
-    key = make_template_fragment_key('project', [kwargs['instance'].user.id])
+
+@receiver(request_started, sender=Project, dispatch_uid="clear_cache_project")
+def update_project(sender, instance, **kwargs):
+    key = make_template_fragment_key('project', [instance.id])
     cache.delete(key)

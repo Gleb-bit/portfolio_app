@@ -33,6 +33,7 @@ class Category(models.Model):
         return self.name
 
     class Meta:
+        ordering = ['name']
         verbose_name_plural = 'categories'
 
 
@@ -54,13 +55,16 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        ordering = ['title']
+
 
 @receiver(post_save, sender=Post, dispatch_uid="clear_cache_post")
 def update_post(sender, instance, **kwargs):
-    key = make_template_fragment_key('post', [instance.profile.user.id, 'en'])
-    cache.delete(key)
-    key = make_template_fragment_key('post', [instance.profile.user.id, 'ru'])
-    cache.delete(key)
+    user_key = instance.profile.user.id
+    for language in ('en', 'ru'):
+        key = make_template_fragment_key('post', [user_key, instance.pk, language])
+        cache.delete(key)
 
 
 class Comment(models.Model):
@@ -78,18 +82,23 @@ class Comment(models.Model):
     def __str__(self):
         return self.author
 
+    class Meta:
+        ordering = ['author']
+
 
 @receiver(post_save, sender=Comment, dispatch_uid="clear_cache_comment")
 def update_comment(sender, instance, **kwargs):
+    user_key = instance.user.id if instance.user else None
     for language in ('en', 'ru'):
-        key = make_template_fragment_key('post', [instance.user.id, language])
+        key = make_template_fragment_key('post', [user_key, instance.post.pk, language])
         cache.delete(key)
 
 
 @receiver(post_delete, sender=Comment, dispatch_uid="clear_cache_comment")
 def delete_comment(sender, instance, **kwargs):
+    user_key = instance.user.id if instance.user else None
     for language in ('en', 'ru'):
-        key = make_template_fragment_key('post', [instance.user.id, language])
+        key = make_template_fragment_key('post', [user_key, instance.post.pk, language])
         cache.delete(key)
 
 
@@ -107,6 +116,7 @@ class Profile(models.Model):
         return self.name
 
     class Meta:
+        ordering = ['name']
         permissions = (('deleteanotherscomment', "can delete another's comment"),)
 
 

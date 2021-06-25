@@ -185,7 +185,8 @@ class EditCommentView(generic.UpdateView):
 
     def get_success_url(self):
         queryset = super().get_queryset()
-        post = Post.objects.filter(id=queryset.filter()[0].post_id)[0]
+        current_comment = queryset.filter(pk=self.object.pk)[0]
+        post = Post.objects.filter(id=current_comment.post_id)[0]
         return f'/blog/{post.pk}/'
 
 
@@ -195,7 +196,8 @@ class DeleteCommentView(generic.DeleteView):
 
     def get_success_url(self):
         queryset = super().get_queryset()
-        post = Post.objects.filter(id=queryset.filter()[0].post_id)[0]
+        current_comment = queryset.filter(pk=self.object.pk)[0]
+        post = Post.objects.filter(id=current_comment.post_id)[0]
         return f'/blog/{post.pk}/'
 
 
