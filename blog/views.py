@@ -19,7 +19,6 @@ class ListCategoryView(generic.ListView):
             "category": category,
             "posts": posts
         }
-        print(posts)
         return render(request, "list_category.html", context)
 
 
@@ -158,12 +157,11 @@ class DetailPostView(generic.DetailView):
 
         post = Post.objects.get(pk=pk)
         comments = Comment.objects.filter(post=post)
-        form = CommentForm(request.POST)
+        form = CommentForm(request.POST, request.FILES)
 
         if form.is_valid():
-            author = self.check_user_authenticated(request, form)
+            author = self.get_author_name(request, form)
             print(form.cleaned_data)
-            print(form.cleaned_data['image'])
 
             comment = Comment(
                 author=author,
@@ -177,7 +175,7 @@ class DetailPostView(generic.DetailView):
         context = {'post': post, 'comments': comments, 'form': form}
         return render(request, "detail_post.html", context)
 
-    def check_user_authenticated(self, request, form):
+    def get_author_name(self, request, form):
         if request.user.is_authenticated:
             author = request.user.profile.name
         elif form.cleaned_data['author']:
