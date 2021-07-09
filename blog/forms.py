@@ -40,7 +40,7 @@ class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        exclude = ['created_on', 'post', 'user']
+        exclude = ['created', 'post', 'user']
 
 
 class AccountForm(forms.ModelForm):

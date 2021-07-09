@@ -1,3 +1,6 @@
+import logging
+from datetime import datetime
+
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import User
@@ -9,12 +12,18 @@ from django.views import generic
 from blog.forms import CommentForm, ExtendedRegisterForm, AccountForm, PostDocumentForm
 from blog.models import Post, Comment, Profile, Category
 
+logger = logging.getLogger(__name__)
+
+
+def get_now():
+    return datetime.now()
+
 
 class ListCategoryView(generic.ListView):
 
     def get(self, request, *args, **kwargs):
         category = kwargs['category']
-        posts = Post.objects.filter(categories__name=category).order_by('-created_on')
+        posts = Post.objects.filter(categories__name=category).order_by('-created')
         context = {
             "category": category,
             "posts": posts
@@ -29,7 +38,7 @@ class ListPostView(generic.ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        queryset = queryset.order_by('-created_on')
+        queryset = queryset.order_by('-created')
         return queryset
 
 
@@ -161,7 +170,6 @@ class DetailPostView(generic.DetailView):
 
         if form.is_valid():
             author = self.get_author_name(request, form)
-            print(form.cleaned_data)
 
             comment = Comment(
                 author=author,
@@ -193,7 +201,7 @@ class EditCommentView(generic.UpdateView):
     def get_success_url(self):
         queryset = super().get_queryset()
         current_comment = queryset.filter(pk=self.object.pk)[0]
-        post = Post.objects.filter(id=current_comment.post_id)[0]
+        post = Post.objects.only('pk').filter(id=current_comment.post_id)[0]
         return f'/blog/{post.pk}/'
 
 
@@ -204,7 +212,7 @@ class DeleteCommentView(generic.DeleteView):
     def get_success_url(self):
         queryset = super().get_queryset()
         current_comment = queryset.filter(pk=self.object.pk)[0]
-        post = Post.objects.filter(id=current_comment.post_id)[0]
+        post = Post.objects.only('pk').filter(id=current_comment.post_id)[0]
         return f'/blog/{post.pk}/'
 
 
@@ -257,6 +265,8 @@ class RegisterView(generic.View):
             user = authenticate(username=username, password=raw_password)
             login(request, user)
 
+            logger.info(f'new user was registered with name {name}, surname {surname} at {get_now()}')
+
             return redirect('/blog')
 
         form = ExtendedRegisterForm()
@@ -265,6 +275,12 @@ class RegisterView(generic.View):
 
 class OurLoginView(LoginView):
     template_name = 'login.html'
+
+    def form_valid(self, form):
+        user = form.get_user()
+        logger.info(f'{user} was authenticated at {get_now()}')
+        login(self.request, user)
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class OurLogoutView(LogoutView):

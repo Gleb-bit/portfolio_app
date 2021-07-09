@@ -45,7 +45,7 @@ class Post(models.Model):
     title = models.CharField(max_length=25)
     body = models.TextField()
     image = models.ImageField(blank=True, upload_to=post_directory_path)
-    created_on = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     categories = models.ManyToManyField(Category, related_name='posts', blank=True)
     profile = models.ForeignKey('Profile', verbose_name='User',
@@ -74,7 +74,7 @@ class Comment(models.Model):
     author = models.CharField(max_length=60, blank=True)
     body = models.TextField()
     image = models.ImageField(upload_to=comment_directory_path, blank=True)
-    created_on = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     user = models.ForeignKey(User, default=None, null=True, verbose_name='Пользователь', on_delete=models.CASCADE,
                              related_name='comments')

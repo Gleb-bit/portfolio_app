@@ -13,11 +13,15 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'list_project' %}">{% trans 'Home' %}</a>
+                <li class="nav-item">
+                    <a {% if request.path == '/projects/' %}
+                        class="nav-link active" {% else %} class="nav-link" {% endif %}
+                        href="{% url 'list_project' %}">{% trans 'Projects' %}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'list_post' %}">{% trans 'Blog' %}</a>
+                    <a {% if '/blog' in request.path and 'user' not in request.path %}
+                        class="nav-link active" {% else %}
+                        class="nav-link" {% endif %} href="{% url 'list_post' %}">{% trans 'Blog' %}</a>
                 </li>
             </ul>
             <ul class="navbar-nav nav-tabs">

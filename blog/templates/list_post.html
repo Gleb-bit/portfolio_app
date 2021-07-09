@@ -12,7 +12,7 @@
         {% for post in posts %}
             <h2><a href="{% url 'detail_post' post.pk %}">{{ post.title }}</a></h2>
             <small>
-                {{ post.created_on.date }} {% trans "was written by" %} {% if post.profile %}
+                {{ post.created.date }} {% trans "was written by" %} {% if post.profile %}
                 {{ post.profile }} {% else %}
                 {% trans "man, who deleted his account" %} {% endif %}|&nbsp;
                 {% if post.categories.all %}

@@ -19,6 +19,7 @@ urlpatterns = [
     path('user/logout/', OurLogoutView.as_view(), name='logout'),
     path('user/<int:pk>', DetailAccountView.as_view(), name='detail_account'),
     path('user/<int:pk>/edit', EditAccountView.as_view(), name='edit_account'),
+
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

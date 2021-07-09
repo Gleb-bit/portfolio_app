@@ -52,8 +52,29 @@ INSTALLED_APPS = [
     'social_django',
     'rest_framework',
     'drf_link_header_pagination',
-    'drf_yasg'
+    'drf_yasg',
+    'debug_toolbar'
 ]
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': 'info.log',
+        }
+    },
+    'root': {
+        'handlers': ['file'],
+        'level': 'INFO',
+        'propagate': True,
+    },
+}
 
 LOGIN_URL = '/blog/user/login/'
 
@@ -74,6 +95,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
 ]
 
 REST_FRAMEWORK = {

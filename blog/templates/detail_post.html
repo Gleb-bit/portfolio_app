@@ -11,7 +11,7 @@
         <div class="col-md-8 offset-md-2">
             <h1>{{ post.title }}</h1>
             <small>
-                {{ post.created_on|date:"d.m.Y H:i:s" }} |&nbsp;
+                {{ post.created|date:"d.m.Y H:i:s" }} |&nbsp;
                 {% if post.categories.all %}
                     {% trans 'Categories' %} :&nbsp;
                     {% for category in post.categories.all %}
@@ -58,10 +58,10 @@
                         </div>
                         <img class="col-md-2" src="{{ MEDIA_URL }}{{ comment.user.profile.avatar.url }}" alt=""
                              width="100px" height="100px">&nbsp;&nbsp;
-                        <b>{{ comment.author }}</b> {% trans "wrote at" %} {{ comment.created_on|date:"H:i:s d.m.Y" }}
+                        <b>{{ comment.author }}</b> {% trans "wrote at" %} {{ comment.created|date:"H:i:s d.m.Y" }}
                         <div class="col-md-8 offset-md-2">
                     {% else %}
-                        <b>{{ comment.author }}</b> {% trans "wrote at" %} {{ comment.created_on|date:"H:i:s d.m.Y" }}
+                        <b>{{ comment.author }}</b> {% trans "wrote at" %} {{ comment.created|date:"H:i:s d.m.Y" }}
                     {% endif %}
                     <p>{{ comment.body }}</p>
                     {% if comment.image %}
