@@ -22,8 +22,8 @@
                 {% endif %}
             </small>
             <p>{{ post.body | linebreaks }}</p>
-            {% if post.image %}
-                <img src="{{ MEDIA_URL }}{{ post.image.url }}" alt=""
+            {% if post.image and post.image.name != 'False'%}
+                <img src="{{ post.image.url }}" alt=""
                      width="800px" height="800px">
             {% endif %}
             {% if request.user.id == post.profile.id %}

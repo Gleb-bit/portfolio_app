@@ -79,49 +79,43 @@ class CreatePostView(LoginRequiredMixin, generic.CreateView):
 
 class EditPostView(generic.UpdateView):
     queryset = Post.objects.all()
+    form_class = PostDocumentForm
     template_name = 'edit_post.html'
     context_object_name = 'post'
     success_url = '/blog/'
 
     def form_valid(self, form):
 
+        categories = [category for category in self.object.categories.all()]
         category_tokens = form.cleaned_data['categories'].split()
-        edit_categories = set()
+        current_categories_names = [category.name for category in self.object.categories.all()]
+        categories_to_update = set(category_tokens) - set(current_categories_names)
+        categories_to_delete = set(current_categories_names) - set(category_tokens)
 
-        for token in category_tokens:
-            try:
-                category = Category.objects.get(name=token)
-            except Category.DoesNotExist:
-                category = Category.objects.create(name=token)
+        if categories_to_update:
+            categories = self.get_categories_to_update(categories_to_update)
 
-            edit_categories.add(category)
-
-        categories = []
+        if categories_to_delete:
+            categories = self.get_categories_to_delete(categories_to_delete)
 
         profile = self.request.user.profile
         title = form.cleaned_data.get('title')
         body = form.cleaned_data.get('body')
         image = form.cleaned_data.get('image')
 
-        for category_to_add in edit_categories:
-            categories.append(Category.objects.get_or_create(name=category_to_add.name)[0])
-
         Post.objects.filter(pk=self.object.pk).delete()
 
         instance = Post.objects.create(id=self.object.pk, title=title, body=body, profile=profile, image=image)
+
         instance.categories.set(categories)
 
-        return HttpResponseRedirect(self.success_url)
+        return HttpResponseRedirect(self.get_success_url())
 
     def get(self, request, *args, **kwargs):
-        categories = ''
         object = self.get_object()
 
-        post_categories = object.categories
-        list_categories = self.add_category(post_categories)
-
-        if list_categories:
-            categories = ' '.join(list_categories)
+        post_categories = object.categories.all()
+        categories = ' '.join(category.name for category in post_categories)
 
         form_data = {
             'title': object.title,
@@ -133,10 +127,24 @@ class EditPostView(generic.UpdateView):
 
         return render(request, self.template_name, {'form': form, 'post': object})
 
-    def add_category(self, post_categories):
-        categories = []
-        for category in post_categories.all():
-            categories.append(Category.objects.filter(name=category.name)[0].name)
+    def get_success_url(self):
+        post = self.object
+        return f'/blog/{post.pk}/'
+
+    def get_categories_to_update(self, edit_categories):
+        categories = [category for category in self.object.categories.all()]
+
+        for category in edit_categories:
+            categories.append(Category.objects.get_or_create(name=category)[0])
+
+        return categories
+
+    def get_categories_to_delete(self, edit_categories):
+        categories = [category for category in self.object.categories.all() if category.name not in edit_categories]
+
+        for category in edit_categories:
+            Category.objects.filter(name=category).delete()
+
         return categories
 
 
