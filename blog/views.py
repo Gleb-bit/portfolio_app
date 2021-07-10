@@ -96,7 +96,7 @@ class EditPostView(generic.UpdateView):
             categories = self.get_categories_to_update(categories_to_update)
 
         if categories_to_delete:
-            categories = self.get_categories_to_delete(categories_to_delete)
+            categories = self.get_categories_to_delete(categories_to_delete, categories)
 
         profile = self.request.user.profile
         title = form.cleaned_data.get('title')
@@ -139,8 +139,8 @@ class EditPostView(generic.UpdateView):
 
         return categories
 
-    def get_categories_to_delete(self, edit_categories):
-        categories = [category for category in self.object.categories.all() if category.name not in edit_categories]
+    def get_categories_to_delete(self, edit_categories, current_categories):
+        categories = [category for category in current_categories if category.name not in edit_categories]
 
         for category in edit_categories:
             Category.objects.filter(name=category).delete()

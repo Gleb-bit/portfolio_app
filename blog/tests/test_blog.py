@@ -59,4 +59,4 @@ class TestBlog(TestCase):
     def test_edit_post(self):
         self.client.login(**self.credentials)
         response = self.client.post('/blog/edit/post/1/', self.user_post_data, follow=True)
-        self.assertRedirects(response, '/blog/')
+        self.assertRedirects(response, '/blog/1/')

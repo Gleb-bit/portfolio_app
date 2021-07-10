@@ -44,7 +44,7 @@ class Post(models.Model):
     """
     title = models.CharField(max_length=25)
     body = models.TextField()
-    image = models.ImageField(blank=True, upload_to=post_directory_path)
+    image = models.ImageField(blank=True, upload_to=post_directory_path, null=True)
     created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     categories = models.ManyToManyField(Category, related_name='posts', blank=True)
