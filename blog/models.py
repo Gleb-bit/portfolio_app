@@ -62,6 +62,7 @@ class Post(models.Model):
 @receiver(post_save, sender=Post, dispatch_uid="clear_cache_post")
 def update_post(sender, instance, **kwargs):
     user_key = instance.profile.user.id
+    print(user_key, instance.pk)
     for language in ('en', 'ru'):
         key = make_template_fragment_key('post', [user_key, instance.pk, language])
         cache.delete(key)

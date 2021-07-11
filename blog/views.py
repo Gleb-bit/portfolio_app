@@ -85,15 +85,14 @@ class EditPostView(generic.UpdateView):
     success_url = '/blog/'
 
     def form_valid(self, form):
-
+        category_tokens = [Category.objects.get_or_create(name=category)[0] for category in
+                           form.cleaned_data['categories'].split()]
         categories = [category for category in self.object.categories.all()]
-        category_tokens = form.cleaned_data['categories'].split()
-        current_categories_names = [category.name for category in self.object.categories.all()]
-        categories_to_update = set(category_tokens) - set(current_categories_names)
-        categories_to_delete = set(current_categories_names) - set(category_tokens)
+        categories_to_update = set(category_tokens) - set(categories)
+        categories_to_delete = set(categories) - set(category_tokens)
 
         if categories_to_update:
-            categories = self.get_categories_to_update(categories_to_update)
+            categories = self.get_categories_to_update(categories_to_update, categories)
 
         if categories_to_delete:
             categories = self.get_categories_to_delete(categories_to_delete, categories)
@@ -131,16 +130,15 @@ class EditPostView(generic.UpdateView):
         post = self.object
         return f'/blog/{post.pk}/'
 
-    def get_categories_to_update(self, edit_categories):
-        categories = [category for category in self.object.categories.all()]
+    def get_categories_to_update(self, edit_categories, current_categories):
 
         for category in edit_categories:
-            categories.append(Category.objects.get_or_create(name=category)[0])
+            current_categories.append(Category.objects.get_or_create(name=category)[0])
 
-        return categories
+        return current_categories
 
     def get_categories_to_delete(self, edit_categories, current_categories):
-        categories = [category for category in current_categories if category.name not in edit_categories]
+        categories = [category for category in current_categories if category not in edit_categories]
 
         for category in edit_categories:
             Category.objects.filter(name=category).delete()
