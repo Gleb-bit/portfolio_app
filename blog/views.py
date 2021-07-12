@@ -78,7 +78,7 @@ class CreatePostView(LoginRequiredMixin, generic.CreateView):
 
 
 class EditPostView(generic.UpdateView):
-    queryset = Post.objects.all()
+    model = Post
     form_class = PostDocumentForm
     template_name = 'edit_post.html'
     context_object_name = 'post'
