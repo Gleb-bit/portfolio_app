@@ -87,15 +87,6 @@ class EditPostView(generic.UpdateView):
     def form_valid(self, form):
         category_tokens = [Category.objects.get_or_create(name=category)[0] for category in
                            form.cleaned_data['categories'].split()]
-        categories = [category for category in self.object.categories.all()]
-        categories_to_update = set(category_tokens) - set(categories)
-        categories_to_delete = set(categories) - set(category_tokens)
-
-        if categories_to_update:
-            categories = self.get_categories_to_update(categories_to_update, categories)
-
-        if categories_to_delete:
-            categories = self.get_categories_to_delete(categories_to_delete, categories)
 
         profile = self.request.user.profile
         title = form.cleaned_data.get('title')
@@ -106,7 +97,7 @@ class EditPostView(generic.UpdateView):
 
         instance = Post.objects.create(id=self.object.pk, title=title, body=body, profile=profile, image=image)
 
-        instance.categories.set(categories)
+        instance.categories.set(category_tokens)
 
         return HttpResponseRedirect(self.get_success_url())
 
