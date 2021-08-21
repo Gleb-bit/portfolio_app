@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
+    'django.contrib.sites',
     'django.contrib.admindocs',
     'projects.apps.ProjectsConfig',
     'blog.apps.BlogConfig',
@@ -104,6 +106,8 @@ REST_FRAMEWORK = {
 }
 
 ROOT_URLCONF = 'personal_portfolio.urls'
+
+SITE_ID = 1
 
 TEMPLATES = [
     {

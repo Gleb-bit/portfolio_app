@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from rest_framework import viewsets, permissions, mixins
-from rest_framework.viewsets import GenericViewSet
 
 from .models import Post, Category, Comment, Profile
 from .permissions import IsPostOwnerOrReadOnly, IsUserOwnerOrReadOnly, IsProfileOwnerOrReadOnly, \
@@ -12,7 +11,7 @@ class PostViewSet(mixins.RetrieveModelMixin,
                   mixins.UpdateModelMixin,
                   mixins.DestroyModelMixin,
                   mixins.ListModelMixin,
-                  GenericViewSet):
+                  viewsets.GenericViewSet):
     '''Information about post'''
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -29,7 +28,7 @@ class CommentViewSet(mixins.RetrieveModelMixin,
                      mixins.UpdateModelMixin,
                      mixins.DestroyModelMixin,
                      mixins.ListModelMixin,
-                     GenericViewSet):
+                     viewsets.GenericViewSet):
     '''Information about comments'''
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer

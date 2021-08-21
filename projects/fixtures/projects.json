@@ -1,0 +1,46 @@
+[
+  {
+    "model": "projects.project",
+    "pk": 1,
+    "fields": {
+      "title": "Air chat bot VK",
+      "description": "���������� ���-���� ��������� ��� �������� ������ � �����, ���-��� �������, ������� ����������� � ����������. ������� ����������� � ���� ������ � ���������� ������� � ��� ������������ ��������������� �����.\r\n",
+      "technology": "Python, vk_api, PonyORM",
+      "image": "img/air_chat_bot_vk.jpg",
+      "github_link": "https://github.com/Gleb-bit/chat-bot-vk"
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 2,
+    "fields": {
+      "title": "Astrobox",
+      "description": "���������� ��������� ��������� ����� �������� �� �������� ���������� � ��������� ������������ ��� ����� ���������, ��� � �������, � �������� ������������� � ������� ���������� � ���� ���������� �� ���������� astrobox. ������ - ������� �������� �� 5 ������ �������� � ���������� �� ���� ��� � ��������� ���. � ������������ ��������� �����, ��� ������� ������� ������� ������.",
+      "technology": "Python, astrobox",
+      "image": "img/astrobox.png",
+      "github_link": "https://github.com/Gleb-bit/astrobox-project"
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 3,
+    "fields": {
+      "title": "Portfolio app",
+      "description": "�������� ����� �� ������� ���� ��������, � �� ��������� ���������, � ����� ���� � ������������ ��������� ������, �������������� �� � ����������� �������",
+      "technology": "Python, Django, Bootstrap",
+      "image": "img/portfolio.png",
+      "github_link": "https://github.com/Gleb-bit/portfolio_app"
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 4,
+    "fields": {
+      "title": "Bakery chat bot VK",
+      "description": "���������� ���-���� ��������� � ����������� ��� ��������� � ������ ���������� ������� �� ���������� ���������. � ���� ������ �������� ������������ � ��������� � ��������, ���������� �� ����������� � ��������",
+      "technology": "Python, vk_api, peewee",
+      "image": "img/bakery_chat_bot_vk.jpg",
+      "github_link": "https://github.com/Gleb-bit/bakery_chat_bot"
+    }
+  }
+]

@@ -1,0 +1,13 @@
+[
+  {
+    "model": "blog.profile",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "name": "First name",
+      "surname": "First surname",
+      "about_me": "",
+      "avatar": "profile/11_07_21-16__18__12_python_with_grid.jpg"
+    }
+  }
+]

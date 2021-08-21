@@ -16,7 +16,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ project.title }}</h5>
                         <p class="card-text">{{ project.description|truncatechars:250 }}</p>
-                        <a href="/projects/{{ project.pk }}"
+                        <a href="{% url 'detail_project' project.pk %}"
                            class="btn btn-primary">
                             {% trans "Read More" %}
                         </a>
